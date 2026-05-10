@@ -1,24 +1,25 @@
-# Calculadora de IMC
+# Calculadora de IMC via CLI
 
-Sistematização da disciplina Programação Orientada a Objetos — POO
+Sistematização da disciplina **Programação Orientada a Objetos** —
+CEUB, Turma B, Campus Virtual (27/04/26 GV2).
 
-
-Calculadora do Índice de Massa Corporal (IMC) que funciona inteiramente
+Calculadora de Índice de Massa Corporal (IMC) que funciona inteiramente
 via linha de comando, demonstrando todos os pilares da Programação
-Orientada a Objetos tais como: tipos básicos, controle de
+Orientada a Objetos exigidos pelo enunciado: tipos básicos, controle de
 fluxo, funções com responsabilidade única, recursão, interface, classe
-abstrata, encapsulamento, herança multi nível, polimorfismo, composição,
+abstrata, encapsulamento, herança multinível, polimorfismo, composição,
 exceções personalizadas e gerenciamento de dependências via Maven.
 
+---
 
-## Pré-requisitos
+## 📋 Pré-requisitos
 
 Para compilar e executar o projeto você precisa ter instalado:
 
 - **Java JDK 17 ou superior** (testado com OpenJDK 21)
 - **Apache Maven 3.8 ou superior**
 
-Verificação rápida pelo Terminal do Mac:
+Verificação rápida:
 
 ```bash
 java -version
@@ -27,7 +28,7 @@ mvn -version
 
 ---
 
-## Como compilar
+## 🔧 Como compilar
 
 A partir da raiz do projeto (a pasta que contém o `pom.xml`):
 
@@ -47,7 +48,7 @@ mvn compile
 
 ---
 
-## Como executar
+## ▶️ Como executar
 
 Após o `mvn package`, há duas formas de rodar:
 
@@ -71,7 +72,7 @@ java -cp target/classes Main
 
 ---
 
-## Como rodar os testes
+## 🧪 Como rodar os testes
 
 A suíte JUnit 5 valida que cada conceito de POO está implementado e
 funcionando como esperado:
@@ -87,7 +88,7 @@ SistemaIMC↔Historico e exceção personalizada.
 
 ---
 
-## Demonstração de uso
+## 💻 Demonstração de uso
 
 Sessão de exemplo no terminal:
 
@@ -131,7 +132,7 @@ A entrada aceita tanto vírgula quanto ponto como separador decimal
 
 ---
 
-## Estrutura do projeto
+## 📁 Estrutura do projeto
 
 ```
 calculadora-imc/
@@ -155,7 +156,7 @@ calculadora-imc/
 
 ---
 
-## Conceitos de POO aplicados
+## 🧠 Conceitos de POO aplicados
 
 | Conceito | Onde aparece no código |
 |---|---|
@@ -176,7 +177,7 @@ calculadora-imc/
 
 ---
 
-## Dependência externa
+## 📦 Dependência externa
 
 O projeto declara **JUnit Jupiter 5.10.2** como dependência de teste no
 `pom.xml`. A escolha foi feita porque:
@@ -189,12 +190,10 @@ O projeto declara **JUnit Jupiter 5.10.2** como dependência de teste no
 
 ---
 
-## Autor
+## 👤 Autor
 
-Nome: Luiz Fernando Castilho - 72600407
+Atividade individual / em grupo (até 5) da disciplina POO — Turma B.
 
-**Instituição:** CEUB — Centro Universitário de Brasília
-**Curso: Ciência da Computação
 **Disciplina:** Programação Orientada a Objetos
 **Professor:** Prof. Romes
-
+**Instituição:** CEUB — Centro Universitário de Brasília
