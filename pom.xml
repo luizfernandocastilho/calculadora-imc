@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- ======= Identificação do projeto ======= -->
+    <groupId>br.edu.ceub</groupId>
+    <artifactId>calculadora-imc</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>Calculadora de IMC via CLI</name>
+    <description>
+        Sistematização da disciplina de Programação Orientada a Objetos -
+        CEUB. Calculadora de IMC em CLI demonstrando todos os pilares de POO.
+    </description>
+
+    <!-- ======= Configuração do compilador ======= -->
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <junit.version>5.10.2</junit.version>
+    </properties>
+
+    <!-- ======= Dependências externas ======= -->
+    <dependencies>
+        <!--
+            JUnit Jupiter — framework de testes unitários.
+            Justificativa: usamos para validar que cada conceito de POO
+            (encapsulamento, polimorfismo, recursão, exceção personalizada)
+            está implementado e funcionando como esperado. Ver src/test/java.
+        -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <!-- ======= Plugins de build ======= -->
+    <build>
+        <plugins>
+            <!-- Plugin de testes — garante que mvn test rode os testes JUnit 5 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+            </plugin>
+
+            <!-- Plugin que empacota um JAR executável (java -jar ...) -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.1</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>Main</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <!-- Permite rodar com: mvn exec:java -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <mainClass>Main</mainClass>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

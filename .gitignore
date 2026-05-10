@@ -1,0 +1,58 @@
+# =========================================================
+# .gitignore — Calculadora de IMC (Java + Maven)
+# =========================================================
+
+# ----- Build do Maven -----
+target/
+build/
+*.jar
+*.war
+*.class
+
+# ----- IDEs -----
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+.metadata/
+bin/
+.factorypath
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# NetBeans
+nb-configuration.xml
+nbactions.xml
+nbproject/private/
+build.xml
+
+# ----- Logs e temporários -----
+*.log
+*.tmp
+*.swp
+*~
+
+# ----- Arquivos do sistema operacional -----
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ----- Segredos (defesa em profundidade) -----
+# Nada de credencial deveria estar nesse projeto, mas como
+# medida preventiva ignoramos qualquer arquivo .env e
+# similares para evitar commits acidentais.
+.env
+.env.*
+*.pem
+*.key
+secrets/
+credentials.json
