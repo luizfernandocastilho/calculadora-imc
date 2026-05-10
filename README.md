@@ -14,12 +14,8 @@ exceções personalizadas e gerenciamento de dependências via Maven.
 
 ## 📋 Pré-requisitos
 
-Para compilar e executar o projeto você precisa ter instalado:
-
 - **Java JDK 17 ou superior** (testado com OpenJDK 21)
 - **Apache Maven 3.8 ou superior**
-
-Verificação rápida:
 
 ```bash
 java -version
@@ -36,11 +32,7 @@ A partir da raiz do projeto (a pasta que contém o `pom.xml`):
 mvn clean package
 ```
 
-Esse comando faz três coisas: limpa builds anteriores, compila o
-código-fonte (em `src/main/java`) e empacota tudo num JAR executável
-dentro de `target/`.
-
-Se quiser apenas compilar sem empacotar:
+Ou apenas compilar sem empacotar:
 
 ```bash
 mvn compile
@@ -50,47 +42,40 @@ mvn compile
 
 ## ▶️ Como executar
 
-Após o `mvn package`, há duas formas de rodar:
-
-**Opção 1 — Via JAR gerado:**
+**Opção 1 — JAR gerado:**
 ```bash
 java -jar target/calculadora-imc-1.0.0.jar
 ```
 
-**Opção 2 — Via plugin do Maven (não precisa empacotar):**
+**Opção 2 — plugin do Maven:**
 ```bash
 mvn exec:java
 ```
 
-**Opção 3 — Sem Maven, usando apenas `javac` e `java`** (útil se ainda
-não instalou Maven):
+**Opção 3 — sem Maven, usando apenas `javac` e `java`:**
 ```bash
 mkdir -p target/classes
-javac -d target/classes -encoding UTF-8 src/main/java/*.java
-java -cp target/classes Main
+javac -d target/classes -encoding UTF-8 src/main/java/br/edu/ceub/calculadoraimc/*.java
+java -cp target/classes br.edu.ceub.calculadoraimc.Main
 ```
 
 ---
 
 ## 🧪 Como rodar os testes
 
-A suíte JUnit 5 valida que cada conceito de POO está implementado e
-funcionando como esperado:
-
 ```bash
 mvn test
 ```
 
-São 12 testes cobrindo: recursão (caso-base e passo recursivo), cálculo
-do IMC, polimorfismo entre Pessoa e Atleta, classificação OMS completa,
-encapsulamento (validação no setter), herança multinível, composição
-SistemaIMC↔Historico e exceção personalizada.
+A suíte cobre 20+ cenários: recursão (caso-base, passo recursivo, expoente
+negativo, não-instanciabilidade), cálculo do IMC, polimorfismo entre
+Pessoa e Atleta, classificação OMS completa, encapsulamento (validação
+em setters), herança multinível, composição com injeção de dependência,
+exceções personalizadas, `toString()` e `equals/hashCode`.
 
 ---
 
 ## 💻 Demonstração de uso
-
-Sessão de exemplo no terminal:
 
 ```
 ==================================================
@@ -111,24 +96,20 @@ Escolha uma opção: 1
 Nome: Maria Silva
 Idade (anos): 25
 Peso (kg): 70
-Altura (m, ex.: 1.75): 1.75
+Altura (m, ex.: 1.75): 1,75
 ✓ Pessoa cadastrada com sucesso.
 
-(...escolhe opção 3...)
+(...escolhe 3...)
+Resultado: Maria Silva → IMC: 22,86 (Peso normal)
 
-Pessoa: Maria Silva | Idade: 25 | Peso: 70.00 kg | Altura: 1.75 m
-Resultado: Maria Silva → IMC: 22.86 (Peso normal)
-
-(...cadastra um atleta com mesmas medidas para mostrar polimorfismo...)
-Resultado: João Atleta → IMC: 22.86 (Abaixo do ideal para atleta)
+(...cadastra atleta com mesmas medidas...)
+Resultado: João Atleta → IMC: 22,86 (Abaixo do ideal para atleta)
 ```
 
-A última linha mostra **polimorfismo na prática**: o mesmo método
-`classificarIMC(22.86)` retorna `"Peso normal"` para Pessoa e
-`"Abaixo do ideal para atleta"` para Atleta.
-
-A entrada aceita tanto vírgula quanto ponto como separador decimal
-(ex.: `1,75` ou `1.75`).
+A última linha mostra **polimorfismo**: o mesmo `classificarIMC(22.86)`
+retorna `"Peso normal"` para Pessoa e `"Abaixo do ideal para atleta"` para
+Atleta. A entrada aceita tanto vírgula quanto ponto como separador
+decimal.
 
 ---
 
@@ -137,22 +118,27 @@ A entrada aceita tanto vírgula quanto ponto como separador decimal
 ```
 calculadora-imc/
 ├── src/
-│   ├── main/java/
+│   ├── main/java/br/edu/ceub/calculadoraimc/
 │   │   ├── CalculadoraIMC.java         ← interface (contrato do cálculo)
 │   │   ├── PessoaBase.java             ← classe abstrata (molde base)
 │   │   ├── Pessoa.java                 ← herança + encapsulamento + interface
 │   │   ├── Atleta.java                 ← herança multinível + polimorfismo
 │   │   ├── Historico.java              ← componente da composição
 │   │   ├── SistemaIMC.java             ← composição + orquestração
-│   │   ├── CalculadoraRecursiva.java   ← recursão (potência) e função simples
+│   │   ├── CalculadoraRecursiva.java   ← recursão + função simples
 │   │   ├── EntradaInvalidaException.java ← exceção personalizada
 │   │   └── Main.java                   ← ponto de entrada + menu CLI
-│   └── test/java/
+│   └── test/java/br/edu/ceub/calculadoraimc/
 │       └── CalculadoraIMCTest.java     ← suíte JUnit 5
 ├── pom.xml                              ← gerenciamento de dependências
 ├── .gitignore                           ← arquivos ignorados pelo Git
 └── README.md                            ← este arquivo
 ```
+
+Os arquivos estão organizados sob o package `br.edu.ceub.calculadoraimc`,
+seguindo a convenção Java de nomeação reversa de domínio. Isso evita o
+*default package* (não recomendado em código profissional) e prepara o
+projeto para crescer com sub-packages se necessário.
 
 ---
 
@@ -161,38 +147,67 @@ calculadora-imc/
 | Conceito | Onde aparece no código |
 |---|---|
 | **Tipos de dados** (int, double, String, boolean) | `Main.java` (variáveis `idade`, `peso`, `altura`, `nome`, `houveCadastro`) |
-| **Operadores** aritméticos, relacionais e lógicos | `Pessoa.calcularIMC()` (aritméticos), `Pessoa.classificarIMC()` (relacionais) |
+| **Operadores** aritméticos, relacionais e lógicos | `Pessoa.calcularIMC()` (aritméticos), `classificarIMC()` (relacionais) |
 | **Controle de fluxo** | Loop `while` do menu e `switch` das opções em `Main.java`; `if/else if` em todas as classificações |
 | **Funções com responsabilidade única** | Métodos `lerInt`, `lerDouble`, `lerString` em `Main`; cada classe com papel claro |
 | **Recursão** | `CalculadoraRecursiva.potencia()` com caso-base (`exp == 0`) e passo recursivo |
 | **Interface** | `CalculadoraIMC.java`, implementada por `Pessoa` |
-| **Classe abstrata** | `PessoaBase.java` com método abstrato `exibirPerfil()` e métodos concretos `getNome`/`getIdade` |
-| **Encapsulamento** | Atributos `private` em `Pessoa` com getters e setter validador (lança exceção se peso/altura ≤ 0) |
+| **Classe abstrata** | `PessoaBase.java` com método abstrato `exibirPerfil()` e métodos concretos |
+| **Encapsulamento** | Atributos `private` em `Pessoa` com getters e setters validadores |
 | **Herança** | `Pessoa extends PessoaBase` reaproveitando atributos via `super()` |
 | **Herança multinível** | `Atleta extends Pessoa extends PessoaBase` (3 níveis) |
-| **Polimorfismo** | `Atleta` sobrescreve `classificarIMC` com `@Override`; `SistemaIMC.processar()` chama o método sem saber o tipo concreto — a JVM despacha em runtime |
-| **Composição** | `SistemaIMC` *tem-um* `Historico` como atributo (não herda) |
-| **Exceção personalizada** | `EntradaInvalidaException extends RuntimeException`, lançada em validações e capturada em `Main` com `try/catch` em todo bloco de leitura |
+| **Polimorfismo** | `Atleta` sobrescreve `classificarIMC` com `@Override`; `SistemaIMC.processar()` despacha em runtime |
+| **Composição** | `SistemaIMC` *tem-um* `Historico` como atributo |
+| **Exceção personalizada** | `EntradaInvalidaException extends RuntimeException`, capturada com `try/catch` em `Main` |
 | **Gerenciamento de dependências** | `pom.xml` com Maven; dependência externa: JUnit Jupiter 5.10.2 |
+
+---
+
+## 🎯 Boas práticas aplicadas
+
+Além de cumprir os critérios do barema, o código segue boas práticas
+estabelecidas (livro *Effective Java* de Joshua Bloch e padrões da
+comunidade):
+
+- **Princípios SOLID identificados nos comentários**: SRP em `Historico`,
+  OCP/LSP em `Atleta`, ISP/DIP em `CalculadoraIMC`, DI em `SistemaIMC`.
+- **Imutabilidade onde possível** (`final` em atributos que não mudam).
+- **Validação fail-fast** nos construtores — objeto nunca existe em
+  estado inválido.
+- **Constantes nomeadas** para todos os limites das faixas de IMC,
+  eliminando *magic numbers*.
+- **Encapsulamento defensivo**: `Historico.getRegistros()` retorna view
+  imutável (`Collections.unmodifiableList`).
+- **Try-with-resources** no `Scanner` em `Main` (fechamento garantido).
+- **`toString()` em todas as classes de domínio** (Effective Java item 12).
+- **`equals()` e `hashCode()` consistentes** em `PessoaBase` (itens 10 e 11).
+- **Construtor privado** em `CalculadoraRecursiva` para impedir
+  instanciação de classe utilitária (item 4), com defesa contra reflexão.
+- **Encadeamento de exceções** preservando causa raiz no construtor
+  alternativo de `EntradaInvalidaException`.
+- **Injeção de dependência** opcional em `SistemaIMC` (construtor que
+  recebe `Historico`), facilitando testes.
+- **UTF-8 declarado** no `pom.xml` (`project.build.sourceEncoding`),
+  garantindo portabilidade de acentos entre sistemas operacionais.
 
 ---
 
 ## 📦 Dependência externa
 
 O projeto declara **JUnit Jupiter 5.10.2** como dependência de teste no
-`pom.xml`. A escolha foi feita porque:
+`pom.xml`. A escolha:
 
-1. É uma **dependência real** (não um placeholder vazio).
-2. É **utilizada de fato** — a suíte em `src/test/java` cobre 12 cenários.
+1. É uma **dependência real** (não placeholder).
+2. É **utilizada de fato** — a suíte em `src/test/java` cobre 20+ cenários.
 3. É a sugestão explícita do enunciado da Sistematização.
-4. Permite que o avaliador verifique objetivamente, com `mvn test`, que
-   cada conceito de POO está funcional — não só presente.
+4. Permite verificação objetiva (via `mvn test`) de que cada conceito de
+   POO está funcional.
 
 ---
 
 ## 👤 Autor
 
-Atividade individual / em grupo (até 5) da disciplina POO — Turma B.
+Atividade da disciplina POO — Turma B.
 
 **Disciplina:** Programação Orientada a Objetos
 **Professor:** Prof. Romes
