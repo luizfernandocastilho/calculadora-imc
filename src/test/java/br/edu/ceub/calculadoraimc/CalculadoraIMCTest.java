@@ -7,21 +7,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Suíte de testes que valida a presença e o comportamento de cada
- * conceito de POO exigido pelo barema, além das melhorias de boas práticas.
- *
- * <p>Cada teste cobre uma propriedade específica para que, em caso de
- * falha, a mensagem indique exatamente qual conceito quebrou.</p>
- */
 class CalculadoraIMCTest {
 
-    /** Tolerância usada em comparações de ponto flutuante. */
     private static final double DELTA = 0.001;
-
-    // ======================================================
-    //                       RECURSÃO
-    // ======================================================
 
     @Test
     @DisplayName("Recursão: caso-base de potência (exp = 0) retorna 1")
@@ -48,17 +36,12 @@ class CalculadoraIMCTest {
     @Test
     @DisplayName("Classe utilitária: construtor privado impede instanciação via reflexão")
     void utilitariaNaoInstanciavel() {
-        // Tentar instanciar via reflexão deve falhar — proteção do construtor privado.
         assertThrows(Exception.class, () -> {
             var ctor = CalculadoraRecursiva.class.getDeclaredConstructor();
             ctor.setAccessible(true);
             ctor.newInstance();
         });
     }
-
-    // ======================================================
-    //                  CÁLCULO DO IMC
-    // ======================================================
 
     @Test
     @DisplayName("IMC do exemplo do enunciado: 70 kg / 1.75 m ≈ 22.86")
@@ -68,21 +51,15 @@ class CalculadoraIMCTest {
         assertEquals(22.857, imc, 0.01);
     }
 
-    // ======================================================
-    //   POLIMORFISMO — Pessoa vs Atleta classificam diferente
-    // ======================================================
-
     @Test
     @DisplayName("Polimorfismo: Pessoa e Atleta classificam o mesmo IMC de formas diferentes")
     void polimorfismoNaClassificacao() {
         Pessoa pessoa = new Pessoa("Joana", 30, 60.0, 1.65);
         Atleta atleta = new Atleta("Bruno", 28, 60.0, 1.65, "Corrida");
 
-        // Caso 1 — IMC 19: Pessoa diz "Peso normal" / Atleta diz "Abaixo do ideal"
         assertEquals("Peso normal",                 pessoa.classificarIMC(19.0));
         assertEquals("Abaixo do ideal para atleta", atleta.classificarIMC(19.0));
 
-        // Caso 2 — IMC 26: Pessoa diz "Sobrepeso" / Atleta diz "Ideal para atleta"
         assertEquals("Sobrepeso",         pessoa.classificarIMC(26.0));
         assertEquals("Ideal para atleta", atleta.classificarIMC(26.0));
     }
@@ -90,15 +67,9 @@ class CalculadoraIMCTest {
     @Test
     @DisplayName("Polimorfismo de referência: variável Pessoa pode segurar Atleta")
     void polimorfismoDeReferencia() {
-        // A variável é declarada como Pessoa, mas o objeto é Atleta —
-        // a JVM despacha a versão de Atleta.classificarIMC em runtime.
         Pessoa ref = new Atleta("Carla", 27, 65.0, 1.70, "Natação");
         assertEquals("Ideal para atleta", ref.classificarIMC(22.5));
     }
-
-    // ======================================================
-    //   CLASSIFICAÇÃO OMS — Pessoa cobre todas as faixas
-    // ======================================================
 
     @Test
     @DisplayName("Classificação OMS cobre todas as faixas")
@@ -111,10 +82,6 @@ class CalculadoraIMCTest {
         assertEquals("Obesidade grau II",            p.classificarIMC(37.0));
         assertEquals("Obesidade grau III (mórbida)", p.classificarIMC(45.0));
     }
-
-    // ======================================================
-    //   ENCAPSULAMENTO — setter valida e lança exceção
-    // ======================================================
 
     @Test
     @DisplayName("Encapsulamento: setter rejeita peso não positivo")
@@ -130,7 +97,7 @@ class CalculadoraIMCTest {
         Pessoa p = new Pessoa("Y", 30, 70, 1.75);
         assertThrows(EntradaInvalidaException.class, () -> p.setAltura(0));
         assertThrows(EntradaInvalidaException.class, () -> p.setAltura(-1.5));
-        assertThrows(EntradaInvalidaException.class, () -> p.setAltura(3.5)); // > 3 m
+        assertThrows(EntradaInvalidaException.class, () -> p.setAltura(3.5));
     }
 
     @Test
@@ -169,28 +136,16 @@ class CalculadoraIMCTest {
                      () -> new Atleta("X", 25, 70, 1.75, "  "));
     }
 
-    // ======================================================
-    //                    HERANÇA MULTINÍVEL
-    // ======================================================
-
     @Test
     @DisplayName("Herança multinível: Atleta É-UMA Pessoa que É-UMA PessoaBase")
     void herancaMultinivel() {
         Atleta atleta = new Atleta("Diego", 25, 80.0, 1.85, "Vôlei");
-        // Atleta IS-A Pessoa
         assertTrue(atleta instanceof Pessoa);
-        // Atleta IS-A PessoaBase (pelo encadeamento)
         assertTrue(atleta instanceof PessoaBase);
-        // Reutiliza getter herdado de PessoaBase
         assertEquals("Diego", atleta.getNome());
         assertEquals(25, atleta.getIdade());
-        // E ainda tem acesso ao próprio
         assertEquals("Vôlei", atleta.getModalidade());
     }
-
-    // ======================================================
-    //                    COMPOSIÇÃO
-    // ======================================================
 
     @Test
     @DisplayName("Composição: SistemaIMC TEM-UM Historico que registra cálculos")
@@ -210,7 +165,6 @@ class CalculadoraIMCTest {
         Historico h = new Historico();
         h.adicionar("teste");
         List<String> registros = h.getRegistros();
-        // Tentar modificar a view deve lançar UnsupportedOperationException.
         assertThrows(UnsupportedOperationException.class,
                      () -> registros.add("hack"));
     }
@@ -221,13 +175,8 @@ class CalculadoraIMCTest {
         Historico hCompartilhado = new Historico();
         SistemaIMC s1 = new SistemaIMC(hCompartilhado);
         s1.processar(new Pessoa("Foo", 30, 70, 1.75));
-        // Mesmo objeto Historico foi passado — totalCalculos reflete isso.
         assertEquals(1, hCompartilhado.tamanho());
     }
-
-    // ======================================================
-    //              EXCEÇÃO PERSONALIZADA
-    // ======================================================
 
     @Test
     @DisplayName("EntradaInvalidaException herda de RuntimeException")
@@ -253,10 +202,6 @@ class CalculadoraIMCTest {
                      () -> sistema.processar(null));
     }
 
-    // ======================================================
-    //                  toString() E IGUALDADE
-    // ======================================================
-
     @Test
     @DisplayName("toString() da Pessoa delega para exibirPerfil()")
     void toStringDelegaParaPerfil() {
@@ -268,13 +213,11 @@ class CalculadoraIMCTest {
     @DisplayName("equals/hashCode baseados em nome+idade respeitam contrato")
     void equalsEHashCode() {
         Pessoa p1 = new Pessoa("João", 30, 70, 1.75);
-        Pessoa p2 = new Pessoa("João", 30, 80, 1.80); // peso/altura diferentes
-        Pessoa p3 = new Pessoa("Maria", 30, 70, 1.75); // nome diferente
+        Pessoa p2 = new Pessoa("João", 30, 80, 1.80);
+        Pessoa p3 = new Pessoa("Maria", 30, 70, 1.75);
 
-        // Igualdade estrutural por nome+idade (mesmo se peso/altura diferentes)
         assertEquals(p1, p2);
         assertEquals(p1.hashCode(), p2.hashCode());
-        // Nomes diferentes => não iguais
         assertNotEquals(p1, p3);
     }
 }
