@@ -20,6 +20,12 @@ fluxo, funções com responsabilidade única, recursão, interface, classe
 abstrata, encapsulamento, herança multinível, polimorfismo, composição,
 exceções personalizadas e gerenciamento de dependências via Maven.
 
+## Link para o projeto no GitHub
+
+```bash
+https://github.com/luizfernandocastilho/calculadora-imc/tree/main
+```
+
 ---
 
 ## Pré-requisitos
