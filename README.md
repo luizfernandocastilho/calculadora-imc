@@ -1,5 +1,6 @@
 # Calculadora de IMC via CLI
 
+---
 ## Autor
 
 **Disciplina:** Programação Orientada a Objetos
@@ -19,6 +20,8 @@ Orientada a Objetos exigidos pelo enunciado: tipos básicos, controle de
 fluxo, funções com responsabilidade única, recursão, interface, classe
 abstrata, encapsulamento, herança multinível, polimorfismo, composição,
 exceções personalizadas e gerenciamento de dependências via Maven.
+
+---
 
 ## Link para o projeto no GitHub
 
