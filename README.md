@@ -1,7 +1,17 @@
 # Calculadora de IMC via CLI
 
+## Autor
+
+**Disciplina:** Programação Orientada a Objetos
+**Professor:** Prof. Romes
+**Instituição:** CEUB — Centro Universitário de Brasília
+
+**Aluno:** Luiz Fernando Castilho
+**RA/DRT:** 72600407
+**E-mail:** luiz.castilho@sempreceub.com
+
 Sistematização da disciplina **Programação Orientada a Objetos** —
-CEUB, Turma B, Campus Virtual (27/04/26 GV2).
+CEUB, Turma B, Campus Virtual.
 
 Calculadora de Índice de Massa Corporal (IMC) que funciona inteiramente
 via linha de comando, demonstrando todos os pilares da Programação
@@ -12,7 +22,7 @@ exceções personalizadas e gerenciamento de dependências via Maven.
 
 ---
 
-## 📋 Pré-requisitos
+## Pré-requisitos
 
 - **Java JDK 17 ou superior** (testado com OpenJDK 21)
 - **Apache Maven 3.8 ou superior**
@@ -24,7 +34,7 @@ mvn -version
 
 ---
 
-## 🔧 Como compilar
+## Como compilar
 
 A partir da raiz do projeto (a pasta que contém o `pom.xml`):
 
@@ -40,7 +50,7 @@ mvn compile
 
 ---
 
-## ▶️ Como executar
+## Como executar
 
 **Opção 1 — JAR gerado:**
 ```bash
@@ -58,20 +68,6 @@ mkdir -p target/classes
 javac -d target/classes -encoding UTF-8 src/main/java/br/edu/ceub/calculadoraimc/*.java
 java -cp target/classes br.edu.ceub.calculadoraimc.Main
 ```
-
----
-
-## 🧪 Como rodar os testes
-
-```bash
-mvn test
-```
-
-A suíte cobre 20+ cenários: recursão (caso-base, passo recursivo, expoente
-negativo, não-instanciabilidade), cálculo do IMC, polimorfismo entre
-Pessoa e Atleta, classificação OMS completa, encapsulamento (validação
-em setters), herança multinível, composição com injeção de dependência,
-exceções personalizadas, `toString()` e `equals/hashCode`.
 
 ---
 
@@ -113,7 +109,7 @@ decimal.
 
 ---
 
-## 📁 Estrutura do projeto
+## Estrutura do projeto
 
 ```
 calculadora-imc/
@@ -142,7 +138,7 @@ projeto para crescer com sub-packages se necessário.
 
 ---
 
-## 🧠 Conceitos de POO aplicados
+## Conceitos de POO aplicados
 
 | Conceito | Onde aparece no código |
 |---|---|
@@ -163,7 +159,7 @@ projeto para crescer com sub-packages se necessário.
 
 ---
 
-## 🎯 Boas práticas aplicadas
+## Boas práticas aplicadas
 
 Além de cumprir os critérios do barema, o código segue boas práticas
 estabelecidas (livro *Effective Java* de Joshua Bloch e padrões da
@@ -191,24 +187,3 @@ comunidade):
   garantindo portabilidade de acentos entre sistemas operacionais.
 
 ---
-
-## 📦 Dependência externa
-
-O projeto declara **JUnit Jupiter 5.10.2** como dependência de teste no
-`pom.xml`. A escolha:
-
-1. É uma **dependência real** (não placeholder).
-2. É **utilizada de fato** — a suíte em `src/test/java` cobre 20+ cenários.
-3. É a sugestão explícita do enunciado da Sistematização.
-4. Permite verificação objetiva (via `mvn test`) de que cada conceito de
-   POO está funcional.
-
----
-
-## 👤 Autor
-
-Atividade da disciplina POO — Turma B.
-
-**Disciplina:** Programação Orientada a Objetos
-**Professor:** Prof. Romes
-**Instituição:** CEUB — Centro Universitário de Brasília
